@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useEffect } from 'react';
 import newWindow from "../../assets/images/icon-new-window.svg";
+import { ThemeContext } from '../ThemeContext';
 import "./myCss.css";
 const app_id = "982e4594"
 const app_key = "35f8214406b97c41b45d1877c4f35456"
@@ -8,7 +9,9 @@ const endpoint = "entries"
 const language_code = "en-us"
 // word_id = "example"
 
-const DictionaryOutput = ({ text = "hello", darkMode = false }) => {
+const DictionaryOutput = ({ text = "hello" }) => {
+    const darkMode=useContext(ThemeContext)
+    // console.log(darkMode2)
     const [pronounciation, setPronounciation] = useState('/ˈkiːbɔːd/')
     const [playHover, setPlayHover] = useState(false)
 
@@ -16,6 +19,8 @@ const DictionaryOutput = ({ text = "hello", darkMode = false }) => {
     const fetchMeaning = async () => {
         // const meaning=await fetch(url,{'mode':'no-cors','headers' : {"app_id": app_id, "app_key": app_key}})
         // console.log("meaning is",meaning)
+        const meaning=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${text}`,{mode:'cors'})
+        console.log("meaning is",meaning)
     }
     useEffect(() => {
         fetchMeaning()
